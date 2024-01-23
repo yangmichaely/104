@@ -89,7 +89,7 @@ public class FindTheBug0 {
 			for (int d = 0; d < 4; d++) {
 				int newX = state.x + dx[d];
 				int newY = state.y + dy[d];
-				if(newX < m && newY < n) {
+				if(newX < n && newY < m && newX >= 0 && newY >= 0) {
 					queue.add(new State(newX, newY, state.moves + 1));
 				}
 			}
