@@ -19,31 +19,21 @@ public class TernaryString {
 	}
 
 	public static int count(String input){
-		if(!input.contains("1") || !input.contains("2") || !input.contains("3")){
+		if(!(input.contains("1") && input.contains("2") && input.contains("3"))){
 			return 0;
 		}
 		int smallest = Integer.MAX_VALUE;
-		Map<Integer, Integer> freq = new HashMap<>();
-		freq.put(1, 0);
-		freq.put(2, 0);
-		freq.put(3, 0);
-		for(int i = 0; i < input.length() - 2; i++){
-			int a = i;
-			while(!(freq.get(1) > 0 && freq.get(2) > 0 && freq.get(3) > 0) && a < input.length()){
-				freq.put(input.charAt(a) - '0', freq.get(input.charAt(a) - '0') + 1);
-				a++;
+		int[] values = new int[3];
+		int left = 0;
+		for(int right = 0; right < input.length(); right++){
+			values[input.charAt(right) - 49]++;
+			while(values[input.charAt(left) - 49] > 1){
+				values[input.charAt(left) - 49]--;
+				left++;
 			}
-			a--;
-			int b = i;
-			while(freq.get(1) > 0 && freq.get(2) > 0 && freq.get(3) > 0 && b < a - 1){
-				freq.put(input.charAt(b) - '0', freq.get(input.charAt(b) - '0') - 1);
-				b++;
+			if(values[1] != 0 && values[0] != 0 && values[2] != 0) {
+				smallest = Math.min(smallest, right - left + 1);
 			}
-			b--;
-			smallest = Math.min(smallest, a - b + 1);
-			freq.put(1, 0);
-			freq.put(2, 0);
-			freq.put(3, 0);
 		}
 		return smallest;
 	}
