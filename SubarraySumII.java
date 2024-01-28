@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class SubarraySumII {
@@ -15,20 +17,19 @@ public class SubarraySumII {
         for (int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(s.nextToken());
         }
-        int sum;
-        int ans = 0;
-        for(int i = 0; i < n - 1; i++){
-            sum = 0;
+
+        long sum = 0;
+        long ans = 0;
+        Map<Long, Long> freq = new HashMap<>();
+        freq.put(0L, 1L);
+
+        for(int i = 0; i < n; i++){
             sum += arr[i];
-            if(sum == target){
-                ans++;
+            long targSubArr = sum - target;
+            if(freq.containsKey(targSubArr)){
+                ans += freq.get(targSubArr);
             }
-            for(int j = i + 1; j < n; j++){
-                sum += arr[j];
-                if(sum == target){
-                    ans++;
-                }
-            }
+            freq.put(sum, freq.getOrDefault(sum, 0L) + 1);
         }
         out.println(ans);
         out.close();
