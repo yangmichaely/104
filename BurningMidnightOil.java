@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.StringTokenizer;
 
 public class BurningMidnightOil {
@@ -10,25 +8,28 @@ public class BurningMidnightOil {
         int n = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
         int l = 1;
-        while (l <= n) {
-            int m = l + (n - l) / 2;
-
-            // Check if x is present at mid
-            if (arr[m] == x)
-                System.out.println(m);
+        int r = n;
+        int min = Integer.MAX_VALUE;
+        while (l <= r) {
+            int m = (r + l) / 2;
+            int x = m;
+            int sum = 0;
+            while(x != 0){
+                sum += x;
+                x /= k;
+            }
+            if (sum == n) {
+                min = m;
                 break;
-
-            // If x greater, ignore left half
-            if (arr[m] < x)
+            }
+            if(sum > n){
+                min = Math.min(min, m);
+                r = m - 1;
+            }
+            else {
                 l = m + 1;
-
-                // If x is smaller, ignore right half
-            else
-                n = m - 1;
+            }
         }
-
-        // If we reach here, then element was
-        // not present
-        return -1;
+        System.out.println(min);
     }
 }
