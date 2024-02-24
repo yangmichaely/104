@@ -63,10 +63,10 @@ public class FindTheBug5 {
 
             Arrays.sort(intervals);
             int count = 1;
-            int end = intervals[0].end;
-            for (int i = 1; i < n; i++) {
-                if (intervals[i].start >= end) {
-                    end = intervals[i].end;
+            int start = intervals[n - 1].start;
+            for (int i = n - 2; i >= 0; i--) {
+                if (intervals[i].end <= start) {
+                    start = intervals[i].start;
                     count += 1;
                 }
             }
